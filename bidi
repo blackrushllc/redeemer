@@ -1,0 +1,50 @@
+#!/usr/bin/env node
+
+/**
+ * Syndorela CLI (bidi) - Placeholder Implementation
+ */
+
+const args = process.argv.slice(2);
+const command = args[0];
+const subcommand = args[1];
+
+const helpText = `
+Syndorela CLI (bidi) - Version 0.1.0
+
+Usage: bidi <command> [subcommand] [options]
+
+Commands:
+  init      Initialize a modernization workspace
+  scan      Perform deterministic repo scanning and indexing
+  analyze   Perform deep analysis and risk assessment
+  pseudo    Build or validate intermediate pseudo-artifacts
+  diagrams  Generate architecture and flow diagrams
+  generate  Produce modern target services from pseudo-artifacts
+  copilot   Access the context-aware AI assistant
+  plugin    Manage modernization plugins
+  run       Execute a full modernization pipeline
+  help      Display this help message
+
+Options:
+  --workspace <path>   Specify the workspace root
+  --source <path/url>  Specify the source repository
+  --verbose            Enable detailed logging
+  --version            Show version information
+
+Example:
+  bidi scan --workspace ./modernization --source ~/code/legacy-app
+`;
+
+if (!command || command === 'help' || args.includes('--help')) {
+  console.log(helpText);
+  process.exit(0);
+}
+
+if (args.includes('--version')) {
+  console.log("bidi version 0.1.0");
+  process.exit(0);
+}
+
+console.log(`[Syndorela] Executing: bidi ${command}${subcommand ? ' ' + subcommand : ''}`);
+console.log(`[Syndorela] Status: Command accepted (Placeholder)`);
+console.log(`[Syndorela] Context: No engine implementation found. Running in POC mode.`);

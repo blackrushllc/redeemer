@@ -1,4 +1,4 @@
-Below is a formal v1 CLI spec for the modernization engine. I’m using **`legacyctl`** as the binary name.
+Below is a formal v1 CLI spec for the modernization engine. I’m using **`bidi`** as the binary name.
 
 A few decisions up front:
 
@@ -83,20 +83,20 @@ That same-stack refactor mode is worth making explicit because it will likely be
 ## 3. Binary and command grammar
 
 ```bash
-legacyctl <command> <subcommand> [options]
+bidi <command> <subcommand> [options]
 ```
 
 Short aliases:
 
-* `legacyctl init`
-* `legacyctl scan`
-* `legacyctl analyze`
-* `legacyctl pseudo build`
-* `legacyctl diagrams build`
-* `legacyctl generate`
-* `legacyctl copilot ask`
-* `legacyctl plugin list`
-* `legacyctl run`
+* `bidi init`
+* `bidi scan`
+* `bidi analyze`
+* `bidi pseudo build`
+* `bidi diagrams build`
+* `bidi generate`
+* `bidi copilot ask`
+* `bidi plugin list`
+* `bidi run`
 
 ## 4. Global flags
 
@@ -131,7 +131,7 @@ These work on most commands.
 ```text
 <workspace>/
   workspace.yaml
-  .legacyctl/
+  .bidi/
     cache/
     logs/
     runs/
@@ -157,14 +157,14 @@ These work on most commands.
 
 ---
 
-# `legacyctl init`
+# `bidi init`
 
 Creates a modernization workspace and records source + default targets.
 
 ### Help text
 
 ```text
-legacyctl init --source <path-or-url> --workspace <path> [options]
+bidi init --source <path-or-url> --workspace <path> [options]
 
 Create a new modernization workspace for a legacy project.
 
@@ -176,8 +176,8 @@ This command:
 - sets default mode and target stacks
 
 Examples:
-  legacyctl init --source ~/code/legacy-app --workspace ~/work/legacy-app-modernization
-  legacyctl init --source https://github.com/acme/old-crm.git --workspace ./modernize --mode refactor --target-backend laravel --target-frontend react
+  bidi init --source ~/code/legacy-app --workspace ~/work/legacy-app-modernization
+  bidi init --source https://github.com/acme/old-crm.git --workspace ./modernize --mode refactor --target-backend laravel --target-frontend react
 ```
 
 ### Arguments
@@ -212,19 +212,19 @@ Examples:
   analyze.tree-sitter
   generate.laravel
   generate.react
-Next: legacyctl scan --workspace /work/legacy-app-modernization
+Next: bidi scan --workspace /work/legacy-app-modernization
 ```
 
 ---
 
-# `legacyctl scan`
+# `bidi scan`
 
 Performs deterministic discovery and indexing.
 
 ### Help text
 
 ```text
-legacyctl scan --workspace <path> [options]
+bidi scan --workspace <path> [options]
 
 Scan the source repository and build the initial machine inventory.
 
@@ -293,20 +293,20 @@ Outputs written:
 
 ---
 
-# `legacyctl tag`
+# `bidi tag`
 
 Applies semantic tags to files, folders, symbols, modules, or issues.
 
 ### Help text
 
 ```text
-legacyctl tag --workspace <path> [selector options] --tag <name> [--tag <name>...]
+bidi tag --workspace <path> [selector options] --tag <name> [--tag <name>...]
 
 Apply analyst tags used for scoping, prioritization, ownership, and migration planning.
 
 Examples:
-  legacyctl tag --workspace ./w --path "src/auth/**" --tag module:auth --tag priority:high
-  legacyctl tag --workspace ./w --symbol "LegacySessionManager" --tag risk:security
+  bidi tag --workspace ./w --path "src/auth/**" --tag module:auth --tag priority:high
+  bidi tag --workspace ./w --symbol "LegacySessionManager" --tag risk:security
 ```
 
 ### Arguments
@@ -332,14 +332,14 @@ Examples:
 
 ---
 
-# `legacyctl analyze`
+# `bidi analyze`
 
 Builds human-readable and machine-readable analysis artifacts.
 
 ### Help text
 
 ```text
-legacyctl analyze --workspace <path> [options]
+bidi analyze --workspace <path> [options]
 
 Run deeper repo analysis and produce reports on architecture, modules, risks, issues, and modernization complexity.
 
@@ -388,14 +388,14 @@ Outputs:
 
 ---
 
-# `legacyctl pseudo build`
+# `bidi pseudo build`
 
 Generates the editable intermediate pseudo-project.
 
 ### Help text
 
 ```text
-legacyctl pseudo build --workspace <path> [options]
+bidi pseudo build --workspace <path> [options]
 
 Generate the pseudo-project used as the editable source of truth for modernization.
 
@@ -447,14 +447,14 @@ Top outputs:
 
 ---
 
-# `legacyctl pseudo validate`
+# `bidi pseudo validate`
 
 Validates edited pseudo artifacts before generation.
 
 ### Help text
 
 ```text
-legacyctl pseudo validate --workspace <path> [options]
+bidi pseudo validate --workspace <path> [options]
 
 Validate pseudo-project structure, schemas, links, traceability, and decision consistency.
 
@@ -485,14 +485,14 @@ Result: warnings
 
 ---
 
-# `legacyctl issues`
+# `bidi issues`
 
 Refreshes focused issue catalogs.
 
 ### Help text
 
 ```text
-legacyctl issues --workspace <path> [issue classes]
+bidi issues --workspace <path> [issue classes]
 
 Generate or refresh issue catalogs that can be reviewed directly or embedded into pseudo artifacts.
 ```
@@ -523,14 +523,14 @@ Catalogs written to analysis/issues/
 
 ---
 
-# `legacyctl diagrams build`
+# `bidi diagrams build`
 
 Generates diagrams from source and/or pseudo artifacts.
 
 ### Help text
 
 ```text
-legacyctl diagrams build --workspace <path> [options]
+bidi diagrams build --workspace <path> [options]
 
 Generate editable architecture and flow artifacts.
 
@@ -571,14 +571,14 @@ Diff mode: disabled
 
 ---
 
-# `legacyctl trace`
+# `bidi trace`
 
 Builds cross-artifact traceability.
 
 ### Help text
 
 ```text
-legacyctl trace --workspace <path> [options]
+bidi trace --workspace <path> [options]
 
 Build traceability maps linking:
 source -> pseudo
@@ -610,14 +610,14 @@ Manifest: analysis/traces/trace-map.json
 
 ---
 
-# `legacyctl decide add`
+# `bidi decide add`
 
 Records a modernization decision.
 
 ### Help text
 
 ```text
-legacyctl decide add --workspace <path> --id <id> --title <title> [options]
+bidi decide add --workspace <path> --id <id> --title <title> [options]
 
 Record an architecture or migration decision that affects generation and review.
 ```
@@ -643,14 +643,14 @@ File: pseudo/decisions/replace-session-auth.yaml
 
 ---
 
-# `legacyctl generate`
+# `bidi generate`
 
 Generates target code from approved pseudo artifacts.
 
 ### Help text
 
 ```text
-legacyctl generate --workspace <path> [options]
+bidi generate --workspace <path> [options]
 
 Generate a modern target codebase, module, or scaffold from the pseudo-project.
 
@@ -703,14 +703,14 @@ Notes:
 
 ---
 
-# `legacyctl copilot ask`
+# `bidi copilot ask`
 
 Interactive AI help over the workspace.
 
 ### Help text
 
 ```text
-legacyctl copilot ask --workspace <path> --prompt <text> [options]
+bidi copilot ask --workspace <path> --prompt <text> [options]
 
 Ask the AI copilot questions grounded in the workspace artifacts.
 ```
@@ -745,14 +745,14 @@ Sources:
 
 ---
 
-# `legacyctl copilot patch`
+# `bidi copilot patch`
 
 Applies AI-assisted edits to pseudo artifacts.
 
 ### Help text
 
 ```text
-legacyctl copilot patch --workspace <path> --target <path> --prompt <text> [options]
+bidi copilot patch --workspace <path> --target <path> --prompt <text> [options]
 
 Apply an AI-assisted patch to a pseudo artifact or config file.
 By default this writes a patch preview, not an in-place overwrite.
@@ -770,14 +770,14 @@ By default this writes a patch preview, not an in-place overwrite.
 
 ---
 
-# `legacyctl export`
+# `bidi export`
 
 Bundles artifacts for review or sharing.
 
 ### Help text
 
 ```text
-legacyctl export --workspace <path> [options]
+bidi export --workspace <path> [options]
 
 Export reports, pseudo artifacts, diagrams, generated code, and manifests.
 ```
@@ -794,14 +794,14 @@ Export reports, pseudo artifacts, diagrams, generated code, and manifests.
 
 ---
 
-# `legacyctl run`
+# `bidi run`
 
 One-shot orchestration command.
 
 ### Help text
 
 ```text
-legacyctl run [options]
+bidi run [options]
 
 Run an end-to-end pipeline using the workspace config or inline flags.
 
@@ -841,14 +841,14 @@ Outputs:
 
 ---
 
-# `legacyctl plugin list`
+# `bidi plugin list`
 
 Lists installed plugins and capabilities.
 
 ### Help text
 
 ```text
-legacyctl plugin list [options]
+bidi plugin list [options]
 
 List installed and discovered plugins.
 ```
@@ -879,14 +879,14 @@ copilot.openai ........ installed
 
 ---
 
-# `legacyctl plugin install`
+# `bidi plugin install`
 
 Installs a plugin.
 
 ### Help text
 
 ```text
-legacyctl plugin install <plugin-id> [options]
+bidi plugin install <plugin-id> [options]
 
 Install a framework/plugin pack.
 ```
@@ -1024,7 +1024,7 @@ This should be first-class, not a side effect.
 Examples:
 
 ```bash
-legacyctl generate \
+bidi generate \
   --workspace ./w \
   --mode refactor \
   --target-backend laravel \
@@ -1033,7 +1033,7 @@ legacyctl generate \
 ```
 
 ```bash
-legacyctl generate \
+bidi generate \
   --workspace ./w \
   --mode refactor \
   --target-backend php.raw \
@@ -1224,8 +1224,8 @@ plugins:
     - generate.react
     - export.pdf
   plugin_dirs:
-    - ./.legacyctl/plugins
-    - ~/.legacyctl/plugins
+    - ./.bidi/plugins
+    - ~/.bidi/plugins
 
 rules:
   include:
@@ -1260,12 +1260,12 @@ decisions:
 ### A. Analyze only
 
 ```bash
-legacyctl init \
+bidi init \
   --source ~/code/old-crm \
   --workspace ~/work/old-crm-modernization \
   --mode document
 
-legacyctl run \
+bidi run \
   --workspace ~/work/old-crm-modernization \
   --scan --analyze --pseudo --diagrams
 ```
@@ -1273,14 +1273,14 @@ legacyctl run \
 ### B. Same-stack refactor
 
 ```bash
-legacyctl init \
+bidi init \
   --source ~/code/old-laravel-app \
   --workspace ~/work/old-laravel-refactor \
   --mode refactor \
   --target-backend laravel \
   --target-frontend vue
 
-legacyctl run \
+bidi run \
   --workspace ~/work/old-laravel-refactor \
   --scan --analyze --pseudo --generate
 ```
@@ -1288,14 +1288,14 @@ legacyctl run \
 ### C. Legacy PHP to modern Node + React
 
 ```bash
-legacyctl init \
+bidi init \
   --source ~/code/legacy-php \
   --workspace ~/work/legacy-php-modernize \
   --mode modernize \
   --target-backend node.nestjs \
   --target-frontend react
 
-legacyctl run \
+bidi run \
   --workspace ~/work/legacy-php-modernize \
   --scan --analyze --pseudo --diagrams --generate --export
 ```
@@ -1320,6 +1320,6 @@ That gets you a strong commercial story fast:
 
 The framework choices above are grounded by current survey data showing strong present-day usage for React, Vue, Angular, Svelte, Node.js, ASP.NET Core, Django, Laravel, Symfony, Spring Boot, and others, while also confirming that older estates like jQuery and AngularJS still matter enough to ingest. ([Stack Overflow][1])
 
-Next, I can turn this into a **man-page style spec** (`legacyctl.1`) plus a **plugin SDK spec** with hook interfaces and JSON schemas.
+Next, I can turn this into a **man-page style spec** (`bidi.1`) plus a **plugin SDK spec** with hook interfaces and JSON schemas.
 
 [1]: https://survey.stackoverflow.co/2025/technology "Technology | 2025 Stack Overflow Developer Survey"
