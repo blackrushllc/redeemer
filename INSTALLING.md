@@ -28,49 +28,17 @@ npm install
 
 ## 2. Production Build
 
-Build the Next.js application for production:
+Build the Next.js application as a static site:
 
 ```bash
 npm run build
 ```
 
-## 3. Process Management (PM2)
+This will generate a static export in the `out` directory.
 
-To ensure the application stays running and restarts on crashes, use PM2.
+## 3. Apache2 Configuration
 
-Install PM2 globally:
-
-```bash
-sudo npm install -g pm2
-```
-
-Start the application:
-
-```bash
-pm2 start npm --name "syndorela" -- start
-```
-
-Configure PM2 to start on system boot:
-
-```bash
-pm2 startup
-pm2 save
-```
-
-The application will now be running on `http://localhost:3000`.
-
-## 4. Apache2 Configuration
-
-Configure Apache2 as a reverse proxy to forward traffic to the Next.js application.
-
-### Enable Apache2 Modules
-
-```bash
-sudo a2enmod proxy
-sudo a2enmod proxy_http
-sudo a2enmod rewrite
-sudo a2enmod ssl
-```
+Configure Apache2 to serve the static files from the `out` directory.
 
 ### Create Site Configuration
 
@@ -80,16 +48,19 @@ Create a new virtual host configuration file:
 sudo nano /etc/apache2/sites-available/syndorela.conf
 ```
 
-Add the following configuration (replace `your-domain.com` with your actual domain):
+Add the following configuration (replace `your-domain.com` and `/var/www/syndorela` with your actual domain and path):
 
 ```apache
 <VirtualHost *:80>
     ServerName your-domain.com
+    
+    DocumentRoot /var/www/syndorela/out
 
-    # Forward all requests to the Next.js app on port 3000
-    ProxyPreserveHost On
-    ProxyPass / http://localhost:3000/
-    ProxyPassReverse / http://localhost:3000/
+    <Directory /var/www/syndorela/out>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
 
     # Optional: Enable compression for better performance
     AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript
@@ -106,7 +77,7 @@ sudo a2ensite syndorela.conf
 sudo systemctl restart apache2
 ```
 
-## 5. Configuring the `bidi` CLI
+## 4. Configuring the `bidi` CLI
 
 To use the `bidi` command globally from anywhere in your terminal, follow these steps:
 
