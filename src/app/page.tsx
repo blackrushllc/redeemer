@@ -11,7 +11,11 @@ import {
   Code2, 
   Search, 
   MessageSquare,
-  ChevronRight
+  ChevronRight,
+  RefreshCw,
+  Database,
+  Layers,
+  Cpu
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -86,48 +90,145 @@ export default function LandingPage() {
             </motion.div>
           </div>
 
-          {/* Mock Product Screenshot Collage */}
+          {/* Visual Pipeline Representation */}
           <motion.div 
             className="mt-24 relative max-w-6xl mx-auto"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <div className="relative z-10 rounded-2xl border bg-card shadow-2xl overflow-hidden aspect-[16/10]">
-              <div className="h-12 border-b bg-muted/30 flex items-center px-4 gap-2">
+            <div className="relative z-10 rounded-2xl border bg-card shadow-2xl overflow-hidden aspect-[16/10] bg-slate-950 flex flex-col">
+              {/* Header */}
+              <div className="h-12 border-b border-slate-800 bg-slate-900/50 flex items-center px-4 justify-between">
                 <div className="flex gap-1.5">
                   <div className="w-3 h-3 rounded-full bg-red-500/20 border border-red-500/50" />
                   <div className="w-3 h-3 rounded-full bg-yellow-500/20 border border-yellow-500/50" />
                   <div className="w-3 h-3 rounded-full bg-green-500/20 border border-green-500/50" />
                 </div>
-                <div className="flex-1 text-center text-xs text-muted-foreground font-medium uppercase tracking-widest">
-                syndorela.com
+                <div className="text-[10px] font-mono text-slate-500 uppercase tracking-[0.2em]">
+                  Redeemer Pipeline Visualizer v1.0
+                </div>
+                <div className="w-12" />
+              </div>
+
+              {/* Main Content */}
+              <div className="flex-1 relative p-8 flex items-center justify-around">
+                {/* Background Grid/Lines */}
+                <div className="absolute inset-0 opacity-10 pointer-events-none" 
+                     style={{ backgroundImage: 'radial-gradient(#3b82f6 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
+                
+                {/* Step 1: Import */}
+                <motion.div whileHover={{ scale: 1.05 }} className="relative z-10 flex flex-col items-center gap-4 group">
+                  <div className="w-28 h-28 rounded-2xl bg-slate-900 border border-slate-800 flex flex-wrap p-3 gap-2 items-center justify-center shadow-inner group-hover:border-primary/50 transition-colors relative overflow-hidden">
+                    <div className="absolute inset-0 flex items-center justify-center opacity-5 group-hover:opacity-10 transition-opacity">
+                      <Database size={64} className="text-slate-400" />
+                    </div>
+                    <div className="px-1.5 py-0.5 rounded bg-blue-500/10 border border-blue-500/30 text-[9px] font-bold text-blue-400 relative z-10">PHP 5.6</div>
+                    <div className="px-1.5 py-0.5 rounded bg-red-500/10 border border-red-500/30 text-[9px] font-bold text-red-400 relative z-10">COBOL</div>
+                    <div className="px-1.5 py-0.5 rounded bg-orange-500/10 border border-orange-500/30 text-[9px] font-bold text-orange-400 relative z-10">Java EE</div>
+                    <div className="px-1.5 py-0.5 rounded bg-gray-500/10 border border-gray-500/30 text-[9px] font-bold text-gray-400 relative z-10">VB6</div>
+                    <div className="px-1.5 py-0.5 rounded bg-yellow-500/10 border border-yellow-500/30 text-[9px] font-bold text-yellow-400 relative z-10">ColdFusion</div>
+                    <div className="px-1.5 py-0.5 rounded bg-purple-500/10 border border-purple-500/30 text-[9px] font-bold text-purple-400 relative z-10">Delphi</div>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-xs font-bold text-slate-300 uppercase tracking-wider">1. Import Legacy</p>
+                    <p className="text-[10px] text-slate-500">Monolithic Applications</p>
+                  </div>
+                </motion.div>
+
+                {/* Connector */}
+                <div className="flex-1 max-w-[60px] h-[2px] bg-slate-800 relative">
+                  <motion.div 
+                    animate={{ left: ['0%', '100%'] }} 
+                    transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                    className="absolute top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_#3b82f6]" 
+                  />
+                </div>
+
+                {/* Step 2 & 3: Pseudo-project */}
+                <motion.div whileHover={{ scale: 1.05 }} className="relative z-10 flex flex-col items-center gap-4 group">
+                  <div className="w-36 h-36 rounded-3xl bg-primary/10 border-2 border-primary/30 flex flex-col items-center justify-center shadow-lg shadow-primary/10 relative group-hover:border-primary transition-colors overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent" />
+                    <div className="absolute inset-0 flex items-center justify-center opacity-5 group-hover:opacity-10 transition-opacity">
+                      <Cpu size={80} className="text-primary" />
+                    </div>
+                    <Code2 className="text-primary mb-2 relative z-10" size={48} />
+                    <div className="flex flex-col items-center relative z-10">
+                      <span className="text-[10px] font-mono font-bold text-primary px-2 py-0.5 bg-primary/20 rounded-full mb-1">PSEUDO-CODE</span>
+                      <span className="text-[8px] text-primary/70 uppercase tracking-tighter italic">Editable Artifacts</span>
+                    </div>
+                    {/* Animated scanning line */}
+                    <motion.div 
+                      animate={{ top: ['0%', '100%', '0%'] }} 
+                      transition={{ duration: 4, repeat: Infinity }}
+                      className="absolute left-0 right-0 h-px bg-primary/40 shadow-[0_0_10px_#3b82f6] z-0" 
+                    />
+                  </div>
+                  <div className="text-center">
+                    <p className="text-xs font-bold text-slate-300 uppercase tracking-wider">2 & 3. Analyze & Edit</p>
+                    <p className="text-[10px] text-slate-500">Transform Logic via Pseudo-Project</p>
+                  </div>
+                </motion.div>
+
+                {/* Split Connector */}
+                <div className="flex-1 max-w-[80px] h-32 relative">
+                  <svg className="absolute inset-0 w-full h-full" viewBox="0 0 80 128" preserveAspectRatio="none">
+                    <path d="M 0 64 L 40 64 L 80 32" fill="none" stroke="#1e293b" strokeWidth="2" />
+                    <path d="M 0 64 L 40 64 L 80 96" fill="none" stroke="#1e293b" strokeWidth="2" />
+                    <motion.circle r="3" fill="#3b82f6" animate={{ offsetDistance: ["0%", "100%"] }} transition={{ duration: 3, repeat: Infinity, ease: "linear" }} style={{ offsetPath: "path('M 0 64 L 40 64 L 80 32')" }} />
+                    <motion.circle r="3" fill="#10b981" animate={{ offsetDistance: ["0%", "100%"] }} transition={{ duration: 3, repeat: Infinity, ease: "linear" }} style={{ offsetPath: "path('M 0 64 L 40 64 L 80 96')" }} />
+                  </svg>
+                </div>
+
+                {/* Step 4: Export Paths */}
+                <div className="flex flex-col gap-8 relative">
+                   <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none">
+                      <Layers size={100} className="text-slate-400" />
+                   </div>
+                  {/* 4a: Refactored Legacy */}
+                  <motion.div whileHover={{ scale: 1.05 }} className="relative z-10 flex items-center gap-4 group">
+                    <div className="w-16 h-16 rounded-xl bg-slate-900 border border-slate-800 flex flex-col items-center justify-center group-hover:border-primary/50 transition-colors">
+                      <RefreshCw size={24} className="text-slate-400 group-hover:text-primary transition-colors" />
+                      <span className="text-[8px] font-bold text-slate-500 mt-1 uppercase">Refactored</span>
+                    </div>
+                    <div className="text-left">
+                      <p className="text-[10px] font-bold text-slate-300 uppercase">4a. Modernized Core</p>
+                      <p className="text-[9px] text-slate-500">Refactored Legacy Stack</p>
+                    </div>
+                  </motion.div>
+
+                  {/* 4b: Modern Stack */}
+                  <motion.div whileHover={{ scale: 1.05 }} className="relative z-10 flex items-center gap-4 group">
+                    <div className="w-24 h-24 rounded-xl bg-emerald-500/5 border border-emerald-500/20 flex flex-wrap p-2 gap-1.5 items-center justify-center shadow-lg shadow-emerald-500/5 group-hover:border-emerald-500/50 transition-colors">
+                      <div className="px-1.5 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/30 text-[9px] font-bold text-cyan-400">Next.js</div>
+                      <div className="px-1.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/30 text-[9px] font-bold text-emerald-400">Go</div>
+                      <div className="px-1.5 py-0.5 rounded bg-orange-500/10 border border-orange-500/30 text-[9px] font-bold text-orange-400">Rust</div>
+                      <div className="px-1.5 py-0.5 rounded bg-indigo-500/10 border border-indigo-500/30 text-[9px] font-bold text-indigo-400">Zig</div>
+                      <div className="px-1.5 py-0.5 rounded bg-amber-500/10 border border-amber-500/30 text-[9px] font-bold text-amber-400">HTMX</div>
+                      <div className="px-1.5 py-0.5 rounded bg-sky-500/10 border border-sky-500/30 text-[9px] font-bold text-sky-400">Deno</div>
+                    </div>
+                    <div className="text-left">
+                      <p className="text-[10px] font-bold text-emerald-400 uppercase">4b. Entirely New Stack</p>
+                      <p className="text-[9px] text-slate-500">Full Tech Migration</p>
+                    </div>
+                  </motion.div>
                 </div>
               </div>
-              <div className="flex h-full">
-                <div className="w-48 border-r bg-muted/10 p-4 space-y-4">
-                  <div className="h-4 w-full bg-muted/20 rounded" />
-                  <div className="h-4 w-3/4 bg-muted/20 rounded" />
-                  <div className="h-4 w-5/6 bg-muted/20 rounded" />
+
+              {/* Footer Info */}
+              <div className="h-10 border-t border-slate-800 bg-slate-900/30 flex items-center px-6 justify-between text-[10px] font-mono text-slate-500">
+                <div className="flex gap-4">
+                  <span className="flex items-center gap-1"><div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" /> SYSTEM READY</span>
+                  <span className="flex items-center gap-1"><div className="w-1.5 h-1.5 rounded-full bg-primary" /> PIPELINE ACTIVE</span>
                 </div>
-                <div className="flex-1 p-8 grid grid-cols-3 gap-6">
-                  <div className="col-span-2 space-y-6">
-                    <div className="h-32 w-full bg-primary/5 border border-primary/10 rounded-xl animate-pulse" />
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="h-24 bg-muted/20 rounded-xl" />
-                      <div className="h-24 bg-muted/20 rounded-xl" />
-                    </div>
-                  </div>
-                  <div className="space-y-4">
-                    <div className="h-full bg-muted/10 border border-dashed rounded-xl flex items-center justify-center">
-                      <Workflow className="text-muted-foreground/30" size={48} />
-                    </div>
-                  </div>
+                <div className="flex gap-4">
+                  <span>LATENCY: 12ms</span>
+                  <span>AI CONFIDENCE: 99.4%</span>
                 </div>
               </div>
             </div>
             <div className="absolute -top-12 -left-12 w-64 h-64 bg-primary/5 rounded-2xl border-2 border-primary/20 backdrop-blur-xl rotate-[-6deg] -z-10 shadow-2xl hidden lg:block" />
-            <div className="absolute -bottom-12 -right-12 w-80 h-48 bg-card/50 rounded-2xl border border-primary/10 backdrop-blur-xl rotate-[3deg] -z-10 shadow-2xl hidden lg:block" />
+            <div className="absolute -bottom-12 -right-12 w-80 h-48 bg-emerald-500/5 rounded-2xl border border-emerald-500/10 backdrop-blur-xl rotate-[3deg] -z-10 shadow-2xl hidden lg:block" />
           </motion.div>
         </div>
       </section>
