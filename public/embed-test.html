@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syndorela Banner Test</title>
+    <script src="embed/syndorela-banner.js"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: #f9fafb;
+            color: #111827;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .site-section {
+            padding: 4rem 0;
+            border-bottom: 1px solid #e5e7eb;
+            margin-bottom: 4rem;
+        }
+        .dark-theme {
+            background-color: #0f172a;
+            color: #f1f5f9;
+            padding: 4rem;
+            margin: 2rem -2rem;
+            --primary: #60a5fa;
+            --foreground: #f1f5f9;
+            --background: #0f172a;
+            --border: rgba(255, 255, 255, 0.1);
+        }
+        h1 { margin-top: 0; }
+        code { background: #eee; padding: 0.2rem 0.4rem; border-radius: 4px; }
+        .dark-theme code { background: #334155; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <section class="site-section">
+            <h1>Light Theme Site</h1>
+            <p>This is a typical light theme website. The banner below should inherit the font and adapt to the light background.</p>
+            <syndorela-banner></syndorela-banner>
+        </section>
+
+<!--        <section class="site-section dark-theme">-->
+<!--            <h1>Dark Theme Site</h1>-->
+<!--            <p>This section simulates a dark theme site. The banner should look great here too, adapting to the dark background and using the site's accent color if defined.</p>-->
+<!--            <code>&#45;&#45;primary: #60a5fa;</code>-->
+<!--            <div style="margin-top: 2rem;">-->
+<!--                <syndorela-banner></syndorela-banner>-->
+<!--            </div>-->
+<!--        </section>-->
+
+        <section class="site-section">
+            <h1>Auto-Injection Test</h1>
+            <p>The banner below is injected automatically by just placing the script tag here (with a data attribute to help it identify itself):</p>
+            <script src="https://syndorela.com/embed/syndorela-banner.js" data-syndorela="true"></script>
+        </section>
+
+        <section class="site-section">
+            <h1>Top Notice Feature</h1>
+            <p>You can trigger a top notice by adding attributes to the banner tag:</p>
+            <code>&lt;syndorela-banner top-notice="1" notice-duration="15"&gt;&lt;/syndorela-banner&gt;</code>
+            <div style="margin-top: 2rem;">
+                <button onclick="addNoticeBanner()">Test Notice (Add banner with attribute)</button>
+            </div>
+            <script>
+                function addNoticeBanner() {
+                    const container = document.getElementById('notice-test-container');
+                    container.innerHTML = '<syndorela-banner top-notice="1" notice-duration="15"></syndorela-banner>';
+                }
+            </script>
+            <div id="notice-test-container" style="margin-top: 1rem;"></div>
+        </section>
+
+        <section class="site-section">
+            <h1>How to embed</h1>
+            <p>Simply include the script and use the tag:</p>
+            <pre><code>&lt;script src="https://syndorela.com/embed/syndorela-banner.js"&gt;&lt;/script&gt;
+&lt;syndorela-banner&gt;&lt;/syndorela-banner&gt;</code></pre>
+        </section>
+    </div>
+</body>
+</html>
