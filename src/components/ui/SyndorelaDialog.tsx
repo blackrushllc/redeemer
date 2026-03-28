@@ -13,11 +13,36 @@ export function SyndorelaDialog() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsOpen(true);
-    }, 1000);
-    return () => clearTimeout(timer);
+    const lastShown = localStorage.getItem("syndorela-modal-last-shown");
+    const now = Date.now();
+    const fourteenDays = 14 * 24 * 60 * 60 * 1000;
+
+    if (!lastShown || now - parseInt(lastShown) > fourteenDays) {
+      const timer = setTimeout(() => {
+        setIsOpen(true);
+        localStorage.setItem("syndorela-modal-last-shown", now.toString());
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
   }, []);
+
+  const handleManualOpen = () => {
+    setHasInteracted(true);
+    setIsOpen(true);
+    localStorage.setItem("syndorela-modal-last-shown", Date.now().toString());
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+      audioRef.current.play().catch(e => console.warn("Failed to play audio on manual open:", e));
+    }
+  };
+
+  const handleClose = () => {
+    setIsOpen(false);
+    // Reset interaction state for next time
+    setTimeout(() => {
+      setHasInteracted(false);
+    }, 500);
+  };
 
   const handleWelcomeClick = () => {
     setHasInteracted(true);
@@ -61,7 +86,8 @@ export function SyndorelaDialog() {
   }, [isOpen, hasInteracted]);
 
   return (
-    <AnimatePresence>
+    <>
+      <AnimatePresence>
       {isOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
           <motion.div
@@ -80,7 +106,7 @@ export function SyndorelaDialog() {
               
               {/* Close Button */}
               <button 
-                onClick={() => setIsOpen(false)}
+                onClick={handleClose}
                 className="absolute top-4 right-4 p-2 rounded-full hover:bg-pink-100 text-pink-400 transition-colors z-20"
               >
                 <X size={24} />
@@ -139,7 +165,7 @@ export function SyndorelaDialog() {
                       className="border-pink-200 text-pink-700 hover:bg-pink-50 hover:text-pink-800 rounded-xl py-6 h-auto transition-all"
                       asChild
                     >
-                      <Link href="#features" onClick={() => setIsOpen(false)}>
+                      <Link href="#features" onClick={handleClose}>
                         <div className="flex flex-col items-center gap-1">
                           <Globe size={18} />
                           <span className="text-xs font-bold uppercase tracking-tighter">Visit This Site</span>
@@ -151,7 +177,7 @@ export function SyndorelaDialog() {
                       className="bg-pink-600 hover:bg-pink-700 text-white shadow-lg shadow-pink-200 rounded-xl py-6 h-auto transition-all"
                       asChild
                     >
-                      <Link href="/app" onClick={() => setIsOpen(false)}>
+                      <Link href="/app" onClick={handleClose}>
                         <div className="flex flex-col items-center gap-1">
                           <Rocket size={18} />
                           <span className="text-xs font-bold uppercase tracking-tighter">Launch Workspace</span>
@@ -213,5 +239,29 @@ export function SyndorelaDialog() {
         </div>
       )}
     </AnimatePresence>
+    
+    {/* Manual Trigger Button */}
+    {!isOpen && (
+      <motion.button
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        whileHover={{ scale: 1.1, rotate: 10 }}
+        whileTap={{ scale: 0.9 }}
+        onClick={handleManualOpen}
+        className="fixed bottom-6 right-6 z-[90] w-14 h-14 bg-white/80 backdrop-blur-md rounded-2xl shadow-xl border-2 border-pink-200 flex items-center justify-center group overflow-hidden"
+        title="A Royal Proclamation"
+      >
+        <div className="absolute inset-0 bg-gradient-to-br from-pink-100 to-purple-100 opacity-0 group-hover:opacity-100 transition-opacity" />
+        <div className="relative w-10 h-10">
+          <Image 
+            src="/artwork/diamond.png" 
+            alt="Royal Proclamation" 
+            fill
+            className="object-contain p-1"
+          />
+        </div>
+      </motion.button>
+    )}
+    </>
   );
 }

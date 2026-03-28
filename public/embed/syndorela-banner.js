@@ -19,6 +19,7 @@
         width: 100%;
         font-family: inherit;
         color: inherit;
+        scroll-margin-top: 100px;
         --accent: var(--primary, #3b82f6);
         --border-color: var(--border, rgba(128, 128, 128, 0.2));
         --muted: var(--muted-foreground, rgba(128, 128, 128, 0.7));
@@ -216,23 +217,23 @@
             Import, Analyse, Transdform, Debug and Build legacy software into modern software.
             </span>
           </a>
-          <a href="https://basilbasic.com" target="_blank" class="item">
+          <a href="https://basilbasic.com/#basilica" target="_blank" class="item">
             <span class="item-title">Basilica</span>
             <span class="item-desc">A portable GUI windowing system for Desktop Applications.</span>
           </a>
-          <a href="https://iobasic.com" target="_blank" class="item">
-            <span class="item-title">UIBASIC</span>
+          <a href="https://uibasic.com" target="_blank" class="item">
+            <span class="item-title">UI-BASIC</span>
             <span class="item-desc">Browser-based development environment and web-facing application platform.</span>
           </a>
           <a href="https://iobasic.com" target="_blank" class="item">
-            <span class="item-title">IOBASIC</span>
+            <span class="item-title">IO-BASIC</span>
             <span class="item-desc">ORM, persistence, and data-access layer for structured application logic.</span>
           </a>
           <a href="https://yobasic.com" target="_blank" class="item">
             <span class="item-title">YoBASIC</span>
             <span class="item-desc">Guided learning system, sandbox, simulator, and tutorial-driven BASIC environment.</span>
           </a>
-          <a href="https://basilbasic.com" target="_blank" class="item">
+          <a href="https://basilbasic.com/#bloom" target="_blank" class="item">
             <span class="item-title">BLOOM</span>
             <span class="item-desc">Reactive UI system and drop-in alternative to React, Angular, Vue, jQuery, and Bootstrap-style stacks.</span>
           </a>
@@ -419,11 +420,11 @@
     scrollLink.onclick = (e) => {
       e.preventDefault();
       if (bannerInstance) {
-        bannerInstance.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        bannerInstance.scrollIntoView({ behavior: 'smooth', block: 'start' });
       } else {
         const firstBanner = document.querySelector('syndorela-banner');
         if (firstBanner) {
-          firstBanner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          firstBanner.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       }
     };

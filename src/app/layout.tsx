@@ -18,6 +18,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Syndorela",
   description: "Convert legacy code into an editable pseudo-project, then modernize with confidence.",
+  icons: {
+    icon: "/artwork/diamond.png",
+  },
 };
 
 export default function RootLayout({
