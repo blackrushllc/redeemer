@@ -346,7 +346,7 @@
       const noticeDuration = this.getAttribute('notice-duration') || this.getAttribute('notice_duration');
       
       if (topNotice === '1' || topNotice === 'true') {
-        const duration = noticeDuration !== null ? parseInt(noticeDuration, 10) : 10;
+        const duration = noticeDuration !== null ? parseInt(noticeDuration, 5) : 5;
         showTopNotice(duration, this);
       }
     }
@@ -477,7 +477,7 @@
 
   const params = getScriptParams();
   if (params.top_notice === '1' || params.top_notice === 'true') {
-    const duration = params.notice_duration !== undefined ? parseInt(params.notice_duration, 10) : 10;
+    const duration = params.notice_duration !== undefined ? parseInt(params.notice_duration, 5) : 5;
     // Delay slightly to ensure body exists if script is in head
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', () => showTopNotice(duration));
